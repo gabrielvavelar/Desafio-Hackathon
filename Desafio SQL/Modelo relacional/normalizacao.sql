@@ -6,21 +6,21 @@ CREATE TABLE tb_pais (
 CREATE TABLE tb_estado (
     idEstado INTEGER PRIMARY KEY,
     nomeEstado TEXT NOT NULL,
-    idPais INTEGER,
+    idPais INTEGER NOT NULL,
     FOREIGN KEY (idPais) REFERENCES tb_pais(idPais)
 );
 
 CREATE TABLE tb_cidade (
     idCidade INTEGER PRIMARY KEY,
     nomeCidade TEXT NOT NULL,
-    idEstado INTEGER,
+    idEstado INTEGER NOT NULL,
     FOREIGN KEY (idEstado) REFERENCES tb_estado(idEstado)
 );
 
 CREATE TABLE tb_cliente_nor (
     idCliente INTEGER PRIMARY KEY,
     nomeCliente TEXT NOT NULL,
-    idCidade INTEGER,
+    idCidade INTEGER NOT NULL,
     FOREIGN KEY (idCidade) REFERENCES tb_cidade(idCidade)
 );
 
@@ -34,9 +34,10 @@ CREATE TABLE tb_modelo (
     nomeModelo TEXT NOT NULL,
     idMarca INTEGER NOT NULL,
     ano INTEGER NOT NULL,
-    combCarro INTEGER,
+    idCombustivel INTEGER NOT NULL,
+    idMarca INTEGER NOT NULL,
     FOREIGN KEY (idMarca) REFERENCES tb_marca(idMarca),
-    FOREIGN KEY (combCarro) REFERENCES tb_combustivel(idCombustivel),
+    FOREIGN KEY (idCombustivel) REFERENCES tb_combustivel(idCombustivel),
     UNIQUE (nomeModelo, idMarca, ano)
 );
 
@@ -44,8 +45,8 @@ CREATE TABLE tb_carro_nor (
     idCarro INTEGER PRIMARY KEY,
     kmCarro INTEGER NOT NULL,
     chassiCarro TEXT NOT NULL, 
-    idModelo INTEGER,
-    idCliente INTEGER,
+    idModelo INTEGER NOT NULL,
+    idCliente INTEGER NOT NULL,
     FOREIGN KEY (idModelo) REFERENCES tb_modelo(idModelo),
     FOREIGN KEY (idCliente) REFERENCES tb_cliente_nor(idCliente)
 );
